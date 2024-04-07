@@ -1,0 +1,143 @@
+#include <iostream>
+
+using namespace std;
+
+// Task 1
+struct Complex {
+    double real;
+    double imag;
+};
+
+Complex addComplex(Complex num1, Complex num2) {
+    Complex result;
+    result.real = num1.real + num2.real;
+    result.imag = num1.imag + num2.imag;
+    return result;
+}
+
+Complex subtractComplex(Complex num1, Complex num2) {
+    Complex result;
+    result.real = num1.real - num2.real;
+    result.imag = num1.imag - num2.imag;
+    return result;
+}
+
+Complex multiplyComplex(Complex num1, Complex num2) {
+    Complex result;
+    result.real = num1.real * num2.real - num1.imag * num2.imag;
+    result.imag = num1.real * num2.imag + num1.imag * num2.real;
+    return result;
+}
+
+Complex divideComplex(Complex num1, Complex num2) {
+    Complex result;
+    double denominator = num2.real * num2.real + num2.imag * num2.imag;
+    result.real = (num1.real * num2.real + num1.imag * num2.imag) / denominator;
+    result.imag = (num1.imag * num2.real - num1.real * num2.imag) / denominator;
+    return result;
+}
+
+// Task 2
+struct Car {
+    double length;
+    double clearance;
+    double engineVolume;
+    double enginePower;
+    double wheelDiameter;
+    string color;
+    string transmissionType;
+};
+
+void setCarValues(Car& car, double length, double clearance, double engineVolume, double enginePower,
+    double wheelDiameter, string color, string transmissionType) {
+    car.length = length;
+    car.clearance = clearance;
+    car.engineVolume = engineVolume;
+    car.enginePower = enginePower;
+    car.wheelDiameter = wheelDiameter;
+    car.color = color;
+    car.transmissionType = transmissionType;
+}
+
+void displayCarValues(Car car) {
+    cout << "Length: " << car.length << " meters" << endl;
+    cout << "Clearance: " << car.clearance << " meters" << endl;
+    cout << "Engine Volume: " << car.engineVolume << " cc" << endl;
+    cout << "Engine Power: " << car.enginePower << " hp" << endl;
+    cout << "Wheel Diameter: " << car.wheelDiameter << " inches" << endl;
+    cout << "Color: " << car.color << endl;
+    cout << "Transmission Type: " << car.transmissionType << endl;
+}
+
+void searchCarByColor(Car cars[], int numCars, string color) {
+    bool found = false;
+    for (int i = 0; i < numCars; ++i) {
+        if (cars[i].color == color) {
+            displayCarValues(cars[i]);
+            found = true;
+        }
+    }
+    if (!found) {
+        cout << "No cars found with the specified color." << endl;
+    }
+}
+
+void searchCarByTransmission(Car cars[], int numCars, string transmissionType) {
+    bool found = false;
+    for (int i = 0; i < numCars; ++i) {
+        if (cars[i].transmissionType == transmissionType) {
+            displayCarValues(cars[i]);
+            found = true;
+        }
+    }
+    if (!found) {
+        cout << "No cars found with the specified transmission type." << endl;
+    }
+}
+
+int main() {
+    // Task 1
+    Complex num1 = { 3.5, 2.5 };
+    Complex num2 = { 1.2, 4.8 };
+
+    Complex sum = addComplex(num1, num2);
+    cout << "Sum: " << sum.real << " + " << sum.imag << "i" << endl;
+
+    Complex difference = subtractComplex(num1, num2);
+    cout << "Difference: " << difference.real << " + " << difference.imag << "i" << endl;
+
+    Complex product = multiplyComplex(num1, num2);
+    cout << "Product: " << product.real << " + " << product.imag << "i" << endl;
+
+    Complex quotient = divideComplex(num1, num2);
+    cout << "Quotient: " << quotient.real << " + " << quotient.imag << "i" << endl;
+
+    // Task 2
+    const int numCars = 3;
+    Car cars[numCars];
+
+
+    setCarValues(cars[0], 4.2, 0.15, 2000, 150, 18, "Red", "Automatic");
+    setCarValues(cars[1], 4.5, 0.18, 2500, 180, 20, "Blue", "Manual");
+    setCarValues(cars[2], 3.8, 0.12, 1800, 120, 16, "Black", "Automatic");
+
+    cout << "\nAll Cars:" << endl;
+    for (int i = 0; i < numCars; ++i) {
+        displayCarValues(cars[i]);
+        cout << endl;
+    }
+
+    string searchColor;
+    cout << "\nEnter color to search: ";
+    cin >> searchColor;
+    cout << "Cars with color " << searchColor << ":" << endl;
+    searchCarByColor(cars, numCars, searchColor);
+
+    string searchTransmission;
+    cout << "\nEnter transmission type to search (Automatic/Manual): ";
+    cin >> searchTransmission;
+    cout << "Cars with transmission type " << searchTransmission << ":" << endl;
+    searchCarByTransmission(cars, numCars, searchTransmission);
+
+    return 0;
+}
